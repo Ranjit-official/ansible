@@ -1,0 +1,21 @@
+---
+- name: Adding the Script to Crontab
+  hosts: webservers
+
+  tasks:
+    - name: Copying the Script
+      copy:
+        src: ./cron_script.sh
+        dest: /tmp/
+        mode: "0777"
+
+    - name: Adding to the Crontab
+      cron:
+        name: Running the Test Script
+        minute: "*"
+        hour: "*"
+        day: "*"
+        month: "*"
+        weekday: "*"
+        user: kali
+        job: /tmp/cron_script.sh
