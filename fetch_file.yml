@@ -1,0 +1,11 @@
+---
+- name: Fetching from the server
+  hosts: webservers
+  become: true
+
+  tasks:
+    - name: Fetching kali files
+      fetch:
+        src: /tmp/kali.yml
+        dest: ./
+        flat: true
