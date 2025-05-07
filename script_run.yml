@@ -1,0 +1,39 @@
+---
+- name: Script Running
+  hosts: webservers
+
+  tasks:
+    - name: Transferring the Script
+      copy:
+        src: ./script.sh
+        dest: /tmp/script.sh
+        mode: "0777"
+    - name: Now running the Script
+      shell: /tmp/script.sh
+
+    - name: Checking wheather created or not
+      stat:
+        path: /home/kali/bad.txt
+      register: file_created
+
+    - name: showing the file check result
+      debug:
+        msg: "the file is {{'found' if file_created.stat.exists else 'not found'}}"
+
+    - name: Successfully created hurrah
+      file:
+        path: /home/kali/hurrah.txt
+        state: touch
+      when: file_created.stat.exists
+
+    - name: writing into the file
+      lineinfile:
+        path: /home/kali/hurrah.txt
+        line: "hurrah i did it!!!!"
+      when: file_created.stat.exists
+
+    - name: not created
+      copy:
+        src: ./kali
+        dest: /tmp/
+      when: not file_created.stat.exists

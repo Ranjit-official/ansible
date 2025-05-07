@@ -1,0 +1,27 @@
+---
+- name: CRUD THE FILES AND FOLDERS
+  hosts: webservers
+  become: true
+
+  tasks:
+    - name: creating the FOLDERS
+      file:
+        path: /home/kali/Desktop/good
+        state: directory
+
+    - name: checking the folder is created or not
+      file:
+        path: /home/kali/Desktop/good
+        state: directory
+
+    - name: creating the file
+      file:
+        path: /home/kali/Desktop/good/good.txt
+        state: touch
+
+    - name: writing the file
+      copy:
+        dest: /home/kali/Desktop/good/good.txt
+        content: |
+          this is good file
+        mode: "0600"

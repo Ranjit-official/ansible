@@ -1,0 +1,10 @@
+---
+- name: Copying the files
+  hosts: webservers
+  become: true
+
+  tasks:
+    - name: Coping kali.txt
+      copy:
+        src: ./first_pb.yml
+        dest: /tmp/kali.yml
