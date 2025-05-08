@@ -1,0 +1,14 @@
+---
+- name: Kiling the Operations
+  hosts: webservers
+  become: true
+  tasks:
+    - name: executing the command
+      ignore_errors: yes
+      shell: "pgrep nginx | xargs kill"
+
+    - name: Starting the service
+      service:
+        name: nginx
+        state: started
+        enabled: true
